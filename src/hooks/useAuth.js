@@ -51,20 +51,30 @@ const useProvideAuth = () => {
     return unsubscribe;
   }, []);
 
-  const logInWithGoogle = () => {
-    return auth.signInWithPopup(googleProvider);
+  const signUpWithCredentials = async (email, password) => {
+    return await auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  const logInWithCredentials = async (email, password) => {
+    return await auth.signInWithEmailAndPassword(email, password);
+  }
+
+  const logInWithGoogle = async () => {
+    return await auth.signInWithPopup(googleProvider);
   };
 
-  const logInWithFacebook = () => {
-    return auth.signInWithPopup(facebookProvider);
+  const logInWithFacebook = async () => {
+    return await auth.signInWithPopup(facebookProvider);
   };
 
-  const logOut = () => {
-    return auth.signOut();
+  const logOut = async () => {
+    return await auth.signOut();
   };
 
   return {
     user,
+    signUpWithCredentials,
+    logInWithCredentials,
     logInWithGoogle,
     logInWithFacebook,
     logOut,
