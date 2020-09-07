@@ -35,21 +35,15 @@ const NavbarDropdown = () => {
         >
           <HStack align="center">
             <Avatar size="sm" src={user ? user.photoURL : null} />
-            <Text fontWeight="lighter" fontSize="lg">
-              {user ? user.displayName : 'Not connected'}
+            <Text maxW="200px" isTruncated fontWeight="lighter" fontSize="lg">
+              {user ? user.displayName : 'Not Connected'}
             </Text>
           </HStack>
         </MenuButton>
-        <MenuList bgColor={bgColor} border="none">
-          <MenuItem>
-            <ColorModeSwitcher />
-          </MenuItem>
-          <MenuItem>
-            <Flex
-              dir="row"
-              align="center"
-              onClick={user ? logOut : () => push('login')}
-            >
+        <MenuList bgColor={bgColor} border="none" fontSize="md">
+          <ColorModeSwitcher />
+          <MenuItem onClick={user ? logOut : () => push('login')}>
+            <Flex dir="row" align="center">
               <Icon as={user ? FiLogOut : FiLogIn} mr={2} />
               {user ? 'Logout' : 'Login'}
             </Flex>

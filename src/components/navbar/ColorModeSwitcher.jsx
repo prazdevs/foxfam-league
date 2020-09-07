@@ -1,6 +1,7 @@
 import {
   Flex,
   Icon,
+  MenuItem,
   Text,
   useColorMode,
   useColorModeValue,
@@ -14,10 +15,12 @@ const ColorModeSwitcher = () => {
   const SwitchIcon = useColorModeValue(FiMoon, FiSun);
 
   return (
-    <Flex dir="row" align="center" onClick={toggleColorMode}>
-      <Icon mr={2} as={SwitchIcon} />
-      <Text>{`Switch to ${otherTheme} mode`}</Text>
-    </Flex>
+    <MenuItem onClick={toggleColorMode}>
+      <Flex dir="row" align="center">
+        <Icon mr={2} as={SwitchIcon} />
+        <Text>{`Switch to ${otherTheme} mode`}</Text>
+      </Flex>
+    </MenuItem>
   );
 };
 
