@@ -7,7 +7,7 @@ import MenuButton from './MenuButton';
 import NavbarDropdown from './NavbarDropdown';
 import NavbarLink from './NavbarLink';
 
-const Header = () => {
+const Navbar = () => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
 
@@ -76,4 +76,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;
