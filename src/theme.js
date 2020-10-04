@@ -1,10 +1,8 @@
-import { extendTheme } from '@chakra-ui/core';
-
 const _focus = {
   boxShadow: '0 0 3px 1px #ed8936 ',
 };
 
-const theme = extendTheme({
+const theme = {
   colors: {
     primary: '#ed8936',
   },
@@ -12,8 +10,8 @@ const theme = extendTheme({
     body: 'Quicksand',
     heading: 'Quicksand',
   },
-  sizes:{
-    "5xl": "62em"
+  sizes: {
+    '5xl': '62em',
   },
   components: {
     Link: {
@@ -31,6 +29,6 @@ const theme = extendTheme({
       },
     },
   },
-});
+};
 
 export default theme;
