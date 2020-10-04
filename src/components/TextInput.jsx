@@ -1,5 +1,6 @@
 import {
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Icon,
   Input,
@@ -14,17 +15,18 @@ const TextInput = ({
   register,
   placeholder,
   label,
+  error,
   type = 'text',
 }) => {
   return (
-    <FormControl>
-      <FormLabel htmlFor={name} mb={0}>
+    <FormControl isInvalid={error}>
+      <FormLabel color={error ? 'red.300': ''} htmlFor={name} mb={0}>
         {label}
       </FormLabel>
       <InputGroup variant="flushed">
         {icon ? (
           <InputLeftElement>
-            <Icon as={icon} />
+            <Icon color={error ? 'red.300' : ''} as={icon} />
           </InputLeftElement>
         ) : null}
         <Input
@@ -34,8 +36,10 @@ const TextInput = ({
           focusBorderColor="primary"
           placeholder={placeholder}
           ref={register}
+          isInvalid={error}
         />
       </InputGroup>
+      <FormErrorMessage >{error}</FormErrorMessage>
     </FormControl>
   );
 };

@@ -16,7 +16,9 @@ const Routes = () => {
       <Route exact path="/login">
         {user ? <Redirect to="/" /> : <Login />}
       </Route>
-      <Route exact path="/signup" component={Signup} />
+      <Route exact path="/signup">
+        {user ? <Redirect to="/" /> : <Signup />}
+      </Route>
     </Switch>
   );
 };

@@ -1,15 +1,33 @@
 import { Button, Heading, Link, Text, VStack } from '@chakra-ui/core';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiAtSign, FiKey, FiLock } from 'react-icons/fi';
 import { NavLink } from 'react-router-dom';
+import { validate as validateEmail } from 'email-validator';
 
 import TextInput from './TextInput';
+import { useAuth } from '../hooks/useAuth';
+import { useRouter } from '../hooks/useRouter';
 
 const Signup = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors, watch, formState } = useForm();
+  const { isSubmitting } = formState;
 
-  const onSubmit = data => console.log(data);
+  const { signUpWithCredentials } = useAuth();
+
+  const { push } = useRouter();
+
+  const password = useRef({});
+  password.current = watch('password', '');
+  const validatePassword = pass => {
+    return password.current === pass || 'Invalid validation';
+  };
+
+  const onSubmit = async ({ email, password, passwordVerification }) => {
+    if (password !== passwordVerification) return;
+    await signUpWithCredentials(email, password);
+    push('/');
+  };
 
   return (
     <VStack spacing={8} mt={8}>
@@ -23,8 +41,12 @@ const Signup = () => {
             name="email"
             icon={FiAtSign}
             placeholder="Type your email"
-            type="email"
-            register={register}
+            error={errors.email?.message}
+            register={register({
+              required: 'Please provide an email.',
+              validate: value =>
+                validateEmail(value) || 'Please provide a valid email.',
+            })}
           />
           <TextInput
             label="Password"
@@ -32,7 +54,13 @@ const Signup = () => {
             icon={FiLock}
             placeholder="Type your password"
             type="password"
-            register={register}
+            error={errors.password?.message}
+            register={register({
+              minLength: {
+                value: 6,
+                message: 'Password is too short.',
+              },
+            })}
           />
           <TextInput
             label="Password verification"
@@ -40,11 +68,15 @@ const Signup = () => {
             icon={FiKey}
             placeholder="Re-type your password"
             type="password"
-            register={register}
+            error={errors.passwordVerification?.message}
+            register={register({
+              validate: validatePassword,
+            })}
           />
           <Button rounded="full" bgColor="primary" type="submit">
             SIGN UP
           </Button>
+          {isSubmitting ? 'SUBMITTING NOW' : ''}
         </VStack>
       </form>
       <VStack spacing={0}>
